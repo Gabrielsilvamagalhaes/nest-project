@@ -4,16 +4,18 @@ import {
 	Delete,
 	Get,
 	HttpCode,
-	HttpStatus,
 	Param,
 	Patch,
 	Post,
 	Res,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { CourseService } from './course.service';
 
 @Controller('course')
 export class CourseController {
+	constructor(private readonly courseService: CourseService) {}
+
 	@Get()
 	findAll(@Res() response: Response): Response {
 		return response.status(200).json({ message: 'List of courses' });
@@ -35,6 +37,9 @@ export class CourseController {
 		return `update course whith di ${id}`;
 	}
 
+	@HttpCode(204)
 	@Delete(':id')
-	remove(@Param('id') id: string) {}
+	remove(@Param('id') id: string) {
+		return id;
+	}
 }

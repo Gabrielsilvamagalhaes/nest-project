@@ -29,7 +29,7 @@ export class CourseService {
 		const existingCourse = this.findOne(id);
 		if (existingCourse) {
 			const index = this.courses.findIndex((c) => c.id === id);
-			this.courses[index] = { id, ...updatedCourseDTO };
+			this.courses[index] = { ...existingCourse, ...updatedCourseDTO };
 		}
 	}
 

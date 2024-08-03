@@ -22,7 +22,7 @@
 			"correctness": {
 				"noUnusedVariables": "warn",
 				"useJsxKeyInIterable": "error",
-				"useHookAtTopLevel": "error",
+				"useHookAtTopLevel": "off",
 				"useExhaustiveDependencies": "error"
 			},
 			"suspicious": {

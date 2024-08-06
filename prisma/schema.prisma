@@ -8,12 +8,30 @@ datasource db {
 }
 
 model Course {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now()) @db.Timestamp()
-  updatedAt   DateTime @updatedAt @db.Timestamp()
-  name        String   @db.VarChar(255)
-  description String   @db.VarChar(255)
-  tags        String[]
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now()) @db.Timestamp()
+  updatedAt   DateTime    @updatedAt @db.Timestamp()
+  name        String      @db.VarChar(255)
+  description String      @db.VarChar(255)
+  CourseTag   CourseTag[]
 
   @@map("course")
+}
+
+model Tag {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique @db.VarChar(255)
+  CourseTag CourseTag[]
+
+  @@map("tags")
+}
+
+model CourseTag {
+  courseId Int
+  course   Course @relation(fields: [courseId], references: [id])
+
+  tagId Int
+  tag   Tag @relation(fields: [tagId], references: [id])
+
+  @@id([courseId, tagId])
 }

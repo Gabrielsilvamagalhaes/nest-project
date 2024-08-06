@@ -1,4 +1,5 @@
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { CreateTagDto } from './create-tag.dto';
 
 export class CreateCourseDto {
 	@IsNotEmpty()
@@ -14,8 +15,5 @@ export class CreateCourseDto {
 	description: string;
 
 	@IsArray()
-	@IsString({
-		each: true,
-	})
-	tags: string[];
+	tags: CreateTagDto[];
 }

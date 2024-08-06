@@ -44,8 +44,7 @@ export class CoursesController {
 		@Res() response: Response,
 	) {
 		const course = await this.coursesService.update(id, updateCourseDto);
-		if (course) return response.status(204);
-
+		if (course) return response.status(204).send();
 		return response.status(404).json({ message: 'Course not found' });
 	}
 
@@ -55,7 +54,7 @@ export class CoursesController {
 		@Res() response: Response,
 	) {
 		const course = await this.coursesService.remove(id);
-		if (course) return response.status(204);
+		if (course) return response.status(204).send();
 
 		return response.status(404).json({ message: 'Course not found' });
 	}

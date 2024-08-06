@@ -1,37 +1,68 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCourseDto } from '../dto/create-course.dto';
-import { ResponseCourseDto } from '../dto/response-course.dto';
 import { UpdateCourseDto } from '../dto/update-course.dto';
-import { CourseEntity } from '../entities/course.entity';
 
 @Injectable()
 export class CoursesRepository {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async save(createCourseDto: CreateCourseDto): Promise<CourseEntity> {
+	async save(createCourseDto: CreateCourseDto) {
 		return await this.prisma.course.create({
-			data: createCourseDto,
+			data: {
+				name: createCourseDto.name,
+				description: createCourseDto.description,
+				CourseTag: {
+					create: createCourseDto.tags.map((tag) => ({
+						tag: {
+							connectOrCreate: {
+								where: {
+									name: tag.name,
+								},
+								create: {
+									name: tag.name,
+								},
+							},
+						},
+					})),
+				},
+			},
 		});
 	}
 
-	async findOneById(id: number): Promise<ResponseCourseDto | null> {
+	async findOneById(id: number) {
 		return await this.prisma.course.findUnique({
 			where: { id },
 			select: {
 				name: true,
 				description: true,
-				tags: true,
+				CourseTag: {
+					select: {
+						tag: {
+							select: {
+								name: true,
+							},
+						},
+					},
+				},
 			},
 		});
 	}
 
-	async findAll(): Promise<ResponseCourseDto[]> {
+	async findAll() {
 		return await this.prisma.course.findMany({
 			select: {
 				name: true,
 				description: true,
-				tags: true,
+				CourseTag: {
+					select: {
+						tag: {
+							select: {
+								name: true,
+							},
+						},
+					},
+				},
 			},
 		});
 	}

@@ -1,4 +1,5 @@
 import { Course } from '@prisma/client';
+import { TagEntity } from './tags.entity';
 
 export class CourseEntity implements Course {
 	id: number;
@@ -6,5 +7,5 @@ export class CourseEntity implements Course {
 	updatedAt: Date;
 	name: string;
 	description: string;
-	tags: string[];
+	tags: TagEntity[];
 }

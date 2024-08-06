@@ -9,6 +9,7 @@ async function bootstrap() {
 			whitelist: true, //SO aceita no body oq foi especificado pelo class-validator
 			forbidNonWhitelisted: true, //Lança um erro se o usuário inserir no body algo indesejado
 			transform: true, //No meio da requisição ele ja faz a tipagem dos atributos
+			enableDebugMessages: true,
 		}),
 	);
 	await app.listen(3000);

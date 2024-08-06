@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { CoursesRepository } from './repositories/courses.repository';
@@ -11,18 +11,37 @@ export class CoursesService {
 	}
 
 	findAll() {
-		return 'This action returns all courses';
+		return this.courseRepository.findAll();
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} course`;
+	async findOne(id: number) {
+		const course = await this.courseRepository.findOneById(id);
+		if (course) return course;
+
+		throw new NotFoundException(
+			{ message: `Course with id ${id} not found` },
+			{
+				cause: console.error(`Course with id ${id} not found`),
+				description: 'Not found course',
+			},
+		);
 	}
 
-	update(id: number, updateCourseDto: UpdateCourseDto) {
-		return `This action updates a #${id} course`;
+	async update(id: number, updateCourseDto: UpdateCourseDto) {
+		try {
+			return await this.courseRepository.updateCourse(id, updateCourseDto);
+		} catch (error) {
+			console.error(error);
+			return false;
+		}
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} course`;
+	async remove(id: number) {
+		try {
+			return await this.courseRepository.delete(id);
+		} catch (error) {
+			console.error(error);
+			return false;
+		}
 	}
 }

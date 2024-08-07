@@ -40,6 +40,7 @@ export class CoursesRepository {
 					select: {
 						tag: {
 							select: {
+								id: true,
 								name: true,
 							},
 						},
@@ -58,6 +59,7 @@ export class CoursesRepository {
 					select: {
 						tag: {
 							select: {
+								id: true,
 								name: true,
 							},
 						},

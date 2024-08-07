@@ -6,6 +6,7 @@ import { CoursesRepository } from './repositories/courses.repository';
 @Injectable()
 export class CoursesService {
 	constructor(private readonly courseRepository: CoursesRepository) {}
+
 	create(createCourseDto: CreateCourseDto) {
 		return this.courseRepository.save(createCourseDto);
 	}

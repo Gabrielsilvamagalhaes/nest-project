@@ -1,10 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { Test, TestingModule } from '@nestjs/testing';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
-import { CourseEntity } from './entities/course.entity';
-import { CoursesRepository } from './repositories/courses.repository';
 
 const createCourseDto: CreateCourseDto = {
 	name: 'Test',
@@ -24,7 +21,9 @@ describe('CoursesService unit tests', () => {
 	let id: string;
 	let created_at: Date;
 	let expectOutputTags: [{ id: string; name: string }];
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	let expectOutputCourses: any;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	let mockCoursesRepository: any;
 
 	beforeEach(async () => {
